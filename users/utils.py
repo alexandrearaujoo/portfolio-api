@@ -1,13 +1,14 @@
 from django.contrib.auth.models import BaseUserManager
 from django.utils import timezone
 
+
 class CustomUserManager(BaseUserManager):
     def __create_user__(self, email, password, name, is_superuser, **extra_fields):
         now = timezone.now()
 
         if not email:
-            raise ValueError('The given email must be set')
-        
+            raise ValueError("The given email must be set")
+
         email = self.normalize_email(email)
 
         user = self.model(
@@ -26,19 +27,7 @@ class CustomUserManager(BaseUserManager):
         return user
 
     def create_user(self, email, password, name, **extra_fields):
-        return self.__create_user__(
-            email,
-            password,
-            name,
-            False,
-            **extra_fields
-        )
-    
+        return self.__create_user__(email, password, name, False, **extra_fields)
+
     def create_superuser(self, email, password, name, **extra_fields):
-        return self.__create_user__(
-            email,
-            password,
-            name,
-            True,
-            **extra_fields
-        )
+        return self.__create_user__(email, password, name, True, **extra_fields)
