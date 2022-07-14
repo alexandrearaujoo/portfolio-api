@@ -21,19 +21,19 @@ class RetriveUpdateDestroyUserView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
 
 
-class LoginAccountView(APIView):
+class LoginUserView(APIView):
     def post(self, request):
         serializer = UserLoginSerializer(data=request.data)
 
         serializer.is_valid(raise_exception=True)
 
-        account = authenticate(
-            username=serializer.validated_data["username"],
-            password=serializer.validated_data["password"],
-        )
+        email = serializer.validated_data["email"]
+        password = serializer.validated_data["password"]
 
-        if account:
-            token, _ = Token.objects.get_or_create(user=account)
+        user = authenticate(username=email, password=password)
+
+        if user:
+            token, _ = Token.objects.get_or_create(user=user)
 
             return Response({"token": token.key})
 
