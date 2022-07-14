@@ -12,12 +12,9 @@ class User(AbstractUser):
     name = models.CharField(max_length=256, null=False)
     email = models.EmailField(max_length=256, null=False, unique=True)
 
-    techs = models.ManyToManyField(
-        "techs.Tech", related_name="users"
-    )
+    techs = models.ManyToManyField("techs.Tech", related_name="users")
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["name"]
 
     objects = CustomUserManager()
-

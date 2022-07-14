@@ -7,13 +7,15 @@ import projects.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('projects', '0002_initial'),
+        ("projects", "0002_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='project',
-            name='img',
-            field=models.ImageField(blank=True, null=True, upload_to=projects.models.upload_img_project),
+            model_name="project",
+            name="img",
+            field=models.ImageField(
+                blank=True, null=True, upload_to=projects.models.upload_img_project
+            ),
         ),
     ]

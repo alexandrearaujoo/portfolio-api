@@ -6,6 +6,7 @@ from rest_framework.views import APIView, Response, status
 from .models import User
 from .serializers import UserSerializer, UserLoginSerializer
 
+
 class ListUsersView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer

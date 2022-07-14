@@ -1,8 +1,9 @@
 import uuid
 from django.db import models
 
+
 def upload_img_project(instance, filename):
-    return f'{instance.id}-{filename}'
+    return f"{instance.id}-{filename}"
 
 
 class Project(models.Model):

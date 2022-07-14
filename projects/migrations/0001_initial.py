@@ -8,20 +8,30 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Project',
+            name="Project",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('title', models.CharField(max_length=126)),
-                ('type', models.CharField(max_length=126)),
-                ('img', models.ImageField(blank=True, null=True, upload_to='projects/')),
-                ('link_website', models.CharField(max_length=126)),
-                ('link_repository', models.CharField(max_length=256)),
-                ('description', models.CharField(max_length=256, null=True)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("title", models.CharField(max_length=126)),
+                ("type", models.CharField(max_length=126)),
+                (
+                    "img",
+                    models.ImageField(blank=True, null=True, upload_to="projects/"),
+                ),
+                ("link_website", models.CharField(max_length=126)),
+                ("link_repository", models.CharField(max_length=256)),
+                ("description", models.CharField(max_length=256, null=True)),
             ],
         ),
     ]
