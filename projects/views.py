@@ -27,4 +27,4 @@ class RetriveUpdateDestroyProjectView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsProjectOwner]
+    permission_classes = [IsProjectOwner | IsAuthenticated]
