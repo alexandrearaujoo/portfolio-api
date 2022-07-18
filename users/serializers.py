@@ -26,6 +26,19 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
 
+    def update(self, instance, validated_data):
+        for key, value in validated_data.items():
+            if key == 'techs' and type(value) == list:
+                for tech in value:
+                    t, _ = Tech.objects.get_or_create(**tech)
+                    instance.techs.add(t)
+            else:
+                setattr(instance, key, value)
+
+        instance.save()
+
+        return instance
+
 
 class UserLoginSerializer(serializers.Serializer):
     email = serializers.CharField(write_only=True)

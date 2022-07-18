@@ -1,14 +1,16 @@
-from django.http import HttpResponse
 from rest_framework import generics
+from rest_framework.permissions import IsAdminUser
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from rest_framework.views import APIView, Response, status
 
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
 
+from .permissions import IsUserOwner
 from .models import User
 from .serializers import UserSerializer, UserLoginSerializer
 
@@ -16,6 +18,8 @@ from .serializers import UserSerializer, UserLoginSerializer
 class ListUsersView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAdminUser]
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -23,9 +27,12 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
 
+
 class RetriveUpdateDestroyUserView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsUserOwner]
 
 
 class LoginUserView(APIView):
