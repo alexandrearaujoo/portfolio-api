@@ -1,7 +1,10 @@
+from django.http import HttpResponse
 from rest_framework import generics
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from rest_framework.views import APIView, Response, status
+
+from django.core.mail import send_mail
 
 from .models import User
 from .serializers import UserSerializer, UserLoginSerializer
@@ -41,3 +44,16 @@ class LoginUserView(APIView):
         return Response(
             {"message": "Invalid credentials"}, status.HTTP_401_UNAUTHORIZED
         )
+
+class SendMailView(APIView):
+    def post(self,request):
+
+        send_mail(
+            subject=request.data['subject'],
+            message=request.data['message'],
+            from_email='manager.portfolio.api@gmail.com',
+            recipient_list=[request.data['for_the']],
+            fail_silently=False,        
+        )
+
+        return HttpResponse("email enviado")
