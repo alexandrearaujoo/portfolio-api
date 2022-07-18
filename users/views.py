@@ -4,7 +4,10 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from rest_framework.views import APIView, Response, status
 
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives 
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.conf import settings
 
 from .models import User
 from .serializers import UserSerializer, UserLoginSerializer
@@ -48,12 +51,25 @@ class LoginUserView(APIView):
 class SendMailView(APIView):
     def post(self,request):
 
-        send_mail(
-            subject=request.data['subject'],
-            message=request.data['message'],
-            from_email='manager.portfolio.api@gmail.com',
-            recipient_list=[request.data['for_the']],
-            fail_silently=False,        
+        html_content = render_to_string('email.html',{
+                'nome': request.data['name'],
+                'message': request.data['message'],
+                'email': request.data['email']
+            }
         )
+
+        text_content = strip_tags(html_content)
+
+        email = EmailMultiAlternatives(
+            request.data['subject'], 
+            text_content, 
+            settings.EMAIL_HOST_USER, 
+            [request.data['for_the']],
+            reply_to=[request.data['email']]
+        )
+
+        email.attach_alternative(html_content, 'text/html')
+
+        email.send()
 
         return HttpResponse("email enviado")
