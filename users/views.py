@@ -75,4 +75,6 @@ class SendMailView(APIView):
 
         email.send()
 
-        return HttpResponse("email enviado")
+        return Response(
+            {"message": "Email successfully sent"}, status.HTTP_202_ACCEPTED
+        )
