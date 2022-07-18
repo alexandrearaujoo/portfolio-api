@@ -2,11 +2,11 @@ from rest_framework import serializers
 
 from .models import Project
 
-from users.serializers import UserSerializer
+from users.serializers import ListUserProjectsSerializer
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    owner = UserSerializer(read_only=True)
+    owner = ListUserProjectsSerializer(read_only=True)
 
     class Meta:
         model = Project
