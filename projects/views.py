@@ -4,7 +4,6 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.parsers import FormParser, MultiPartParser
 
-from .mixins import SerializerByMethodMixin
 from .permissions import IsProjectOwner
 from .models import Project
 from .serializers import ProjectSerializer
