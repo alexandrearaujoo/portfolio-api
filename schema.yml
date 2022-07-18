@@ -1,0 +1,474 @@
+openapi: 3.0.3
+info:
+  title: Portfolio API
+  version: 1.0.0
+  description: Api in order to register personal projects to be consumed in the Front-End
+    and create your personal portfolio
+paths:
+  /api/projects/:
+    get:
+      operationId: projects_list
+      tags:
+      - projects
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+          description: ''
+    post:
+      operationId: projects_create
+      tags:
+      - projects
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Project'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Project'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: ''
+  /api/projects/{id}/:
+    get:
+      operationId: projects_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this project.
+        required: true
+      tags:
+      - projects
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: ''
+    put:
+      operationId: projects_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this project.
+        required: true
+      tags:
+      - projects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: ''
+    patch:
+      operationId: projects_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this project.
+        required: true
+      tags:
+      - projects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProject'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: ''
+    delete:
+      operationId: projects_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this project.
+        required: true
+      tags:
+      - projects
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/techs/:
+    get:
+      operationId: techs_list
+      tags:
+      - techs
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tech'
+          description: ''
+  /api/techs/{id}:
+    get:
+      operationId: techs_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tech.
+        required: true
+      tags:
+      - techs
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tech'
+          description: ''
+    put:
+      operationId: techs_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tech.
+        required: true
+      tags:
+      - techs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tech'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tech'
+          description: ''
+    patch:
+      operationId: techs_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tech.
+        required: true
+      tags:
+      - techs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTech'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tech'
+          description: ''
+    delete:
+      operationId: techs_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tech.
+        required: true
+      tags:
+      - techs
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/users/:
+    get:
+      operationId: users_list
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+  /api/users/login/:
+    post:
+      operationId: users_login_create
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/users/register/:
+    post:
+      operationId: users_register_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/users/send_email/:
+    post:
+      operationId: users_send_email_create
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+components:
+  schemas:
+    ListUserProjects:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 256
+        email:
+          type: string
+          format: email
+          maxLength: 256
+      required:
+      - email
+      - id
+      - name
+    PatchedProject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        title:
+          type: string
+          maxLength: 126
+        type:
+          type: string
+          maxLength: 126
+        slug:
+          type: string
+          nullable: true
+          maxLength: 126
+        description:
+          type: string
+          nullable: true
+          maxLength: 256
+        link_website:
+          type: string
+          maxLength: 126
+        link_repository:
+          type: string
+          maxLength: 256
+        img:
+          type: string
+          format: uri
+          nullable: true
+        owner:
+          allOf:
+          - $ref: '#/components/schemas/ListUserProjects'
+          readOnly: true
+    PatchedTech:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 126
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        title:
+          type: string
+          maxLength: 126
+        type:
+          type: string
+          maxLength: 126
+        slug:
+          type: string
+          nullable: true
+          maxLength: 126
+        description:
+          type: string
+          nullable: true
+          maxLength: 256
+        link_website:
+          type: string
+          maxLength: 126
+        link_repository:
+          type: string
+          maxLength: 256
+        img:
+          type: string
+          format: uri
+          nullable: true
+        owner:
+          allOf:
+          - $ref: '#/components/schemas/ListUserProjects'
+          readOnly: true
+      required:
+      - id
+      - link_repository
+      - link_website
+      - owner
+      - title
+      - type
+    Tech:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 126
+      required:
+      - id
+      - name
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 256
+        email:
+          type: string
+          format: email
+          maxLength: 256
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+        techs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tech'
+      required:
+      - email
+      - id
+      - name
+      - password
+      - techs
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
