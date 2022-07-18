@@ -63,8 +63,6 @@ class SendMailView(APIView):
 
         text_content = strip_tags(html_content)
 
-        print(settings.EMAIL_HOST_USER)
-
         email = EmailMultiAlternatives(
             request.data["subject"],
             text_content,
