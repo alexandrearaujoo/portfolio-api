@@ -27,7 +27,6 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
 
-
 class RetriveUpdateDestroyUserView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -49,7 +48,7 @@ class LoginUserView(APIView):
         if user:
             token, _ = Token.objects.get_or_create(user=user)
 
-            return Response({"token": token.key})
+            return Response({"token": token.key, "user_id": user.id})
 
         return Response(
             {"message": "Invalid credentials"}, status.HTTP_401_UNAUTHORIZED
@@ -64,7 +63,7 @@ class SendMailView(APIView):
             {
                 "nome": request.data["name"],
                 "message": request.data["message"],
-                "email": request.data["email"],
+                "from_email": request.data["from_email"],
             },
         )
 
@@ -74,7 +73,7 @@ class SendMailView(APIView):
             request.data["subject"],
             text_content,
             settings.EMAIL_HOST_USER,
-            [request.data["for_the"]],
+            [request.data["to_email"]],
             reply_to=[request.data["email"]],
         )
 

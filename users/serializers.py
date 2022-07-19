@@ -28,7 +28,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         for key, value in validated_data.items():
-            if key == 'techs' and type(value) == list:
+            if key == "techs" and type(value) == list:
                 for tech in value:
                     t, _ = Tech.objects.get_or_create(**tech)
                     instance.techs.add(t)
