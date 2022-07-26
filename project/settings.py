@@ -176,3 +176,11 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
 
 django_heroku.settings(locals())
+
+AWS_ACCESS_KEY_ID = 'AKIATQM6ORDQYNYOQ4G4'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'manager-portfolio-api'
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
