@@ -1,3 +1,3 @@
 ## Documentation
 
-# https://manager-portfolio-api.herokuapp.com/api/docs/
+https://manager-portfolio-api.herokuapp.com/api/docs/
