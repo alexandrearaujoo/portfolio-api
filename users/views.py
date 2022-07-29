@@ -74,7 +74,7 @@ class SendMailView(APIView):
             text_content,
             settings.EMAIL_HOST_USER,
             [request.data["to_email"]],
-            reply_to=[request.data["email"]],
+            reply_to=[request.data["from_email"]],
         )
 
         email.attach_alternative(html_content, "text/html")
